@@ -1,7 +1,7 @@
 import { connect, disconnect } from "mongoose";
 async function connectToDatabase() {
   try {
-    await connect(process.env.MONGODB_URL);
+    await connect("mongodb://127.0.0.1:27017/chatBot");
   } catch (error) {
     console.log(error);
     throw new Error("Could not Connect To MongoDB");

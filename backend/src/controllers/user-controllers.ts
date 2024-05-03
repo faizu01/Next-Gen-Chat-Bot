@@ -12,6 +12,7 @@ export const getAllUsers = async (
   try {
     //get all users
     const users = await User.find();
+    console.log(users);
     return res.status(200).json({ message: "OK", users });
   } catch (error) {
     console.log(error);

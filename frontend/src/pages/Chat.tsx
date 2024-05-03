@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Box, Avatar, Typography, Button, IconButton } from "@mui/material";
 import red from "@mui/material/colors/red";
 import { useAuth } from "../context/AuthContext";
@@ -19,7 +19,9 @@ const Chat = () => {
   const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const auth = useAuth();
+  // console.log(auth)
   const [chatMessages, setChatMessages] = useState<Message[]>([]);
+  // console.log(chatMessages)
   const handleSubmit = async () => {
     const content = inputRef.current?.value as string;
     if (inputRef && inputRef.current) {
@@ -100,7 +102,6 @@ const Chat = () => {
             }}
           >
             {auth?.user?.name[0]}
-            {auth?.user?.name.split(" ")[1][0]}
           </Avatar>
           <Typography sx={{ mx: "auto", fontFamily: "work sans" }}>
             You are talking to a ChatBOT
@@ -119,7 +120,7 @@ const Chat = () => {
               borderRadius: 3,
               mx: "auto",
               bgcolor: red[300],
-              ":hover": {
+              "&:hover": {
                 bgcolor: red.A400,
               },
             }}
@@ -142,7 +143,7 @@ const Chat = () => {
             color: "white",
             mb: 2,
             mx: "auto",
-            fontWeight: "600",
+            fontWeight: 600,
           }}
         >
           Model - GPT 3.5 Turbo
@@ -161,10 +162,11 @@ const Chat = () => {
             scrollBehavior: "smooth",
           }}
         >
-          {chatMessages.map((chat, index) => (
-            //@ts-ignore
-            <ChatItem content={chat.content} role={chat.role} key={index} />
-          ))}
+          {chatMessages.map((chat, index) => {
+            return (
+              <ChatItem key={index} content={chat?.content} role={chat?.role} />
+            );
+          })}
         </Box>
         <div
           style={{
@@ -175,7 +177,6 @@ const Chat = () => {
             margin: "auto",
           }}
         >
-          {" "}
           <input
             ref={inputRef}
             type="text"
